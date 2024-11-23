@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,12 @@ import toast from "react-hot-toast";
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (auth.isAuthenticated()) {
+      router.push("/dashboard");
+    }
+  }, [router]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,6 +44,15 @@ export default function LoginPage() {
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
+          <div className="mt-4 text-center text-sm text-gray-600 bg-blue-50 p-4 rounded-lg shadow-md">
+            <p className="font-semibold text-blue-700">Demo Credentials:</p>
+            <p className="text-blue-700">
+              Email: <span className="font-mono">john@mail.com</span>
+            </p>
+            <p className="text-blue-700">
+              Password: <span className="font-mono">changeme</span>
+            </p>
+          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4 rounded-md shadow-sm">
